@@ -1,5 +1,5 @@
 
-<?php require_once 'Theme/blocks/header.php'; ?>
+<?php  require_once 'Theme/blocks/header.php'; ?>
 
 
 
