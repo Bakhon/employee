@@ -87,7 +87,7 @@ error_reporting(0);
                             <li class="nav-item text-center">
                             <?php if($_SESSION) { ?>
                                 <a class="nav-link" href="myprofile.php">                                   
-                                    <svg class="mr-2 i is-user"><use xlink:href="#s-sign-in-alt"></use></svg>Личный кабинет</a>
+                                <i class="fa fa-user" aria-hidden="true"> Личный кабинет</i></a>
                                     <?php }else{ ?>
                                         <a class="nav-link" href="login.php">                                   
                                     <svg class="mr-2 i is-sign-in-alt"><use xlink:href="#s-sign-in-alt"></use></svg>Войти</a>

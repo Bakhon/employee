@@ -560,9 +560,40 @@
 <div class="py-5 text-center bg-ultra-light">
 <a data-toggle="modal"  data-target="#add_review" href="#" class="btn btn-lg btn-secondary review"> Оставить отзыв </a>         
 </div>
+<?php session_start();
+ print_r($_SESSION); 
+ echo 123;
+ ?>
 
+<div class="modal modal-load fade show" id="add_review" tabindex="-1" data-modal-action="/profile/modal-review?user=36221" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
+    <div class="modal-dialog" role="document">
+    <?php   if($_SESSION) { ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Вы не можете оставить</h5>                                
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body"><div class="mb-3"><div class="font-weight-bold">Если Вы заказчик:</div><div class="p-2">Вы можете оставить отзыв исполнителю, только если Вы ранее создали тендер на сайте, а этот исполнитель ответил на него.</div></div><div><div class="font-weight-bold">Если Вы исполнитель:</div><div class="p-2">Вы можете оставить отзыв заказчику, только если Вы ответили на тендер этого заказчика.</div></div></div>
+            <div class="modal-footer"><a class="btn btn-primary" href="/login">Войти</a><a class="btn btn-primary" href="/login">Зарегистрироваться</a></div>
+        </div>
+    <?php }else { ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Вы не можете оставить отзыв</h5>                                
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body"><div class="mb-3"><div class="font-weight-bold">Если Вы заказчик:</div><div class="p-2">Вы можете оставить отзыв исполнителю, только если Вы ранее создали тендер на сайте, а этот исполнитель ответил на него.</div></div><div><div class="font-weight-bold">Если Вы исполнитель:</div><div class="p-2">Вы можете оставить отзыв заказчику, только если Вы ответили на тендер этого заказчика.</div></div></div>
+            <div class="modal-footer"><a class="btn btn-primary" href="/login">Войти</a><a class="btn btn-primary" href="/login">Зарегистрироваться</a></div>
+        </div>
+    <?php } ?>
+    </div>
+</div>
 
-<div class="modal fade" id="add_review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -688,6 +719,7 @@
 <script src="Theme/js/photoswipe-ui-default.min.js"></script>
 <script src="Theme/js/script.js"></script>
 
+<script src="https://use.fontawesome.com/029b8e5d68.js"></script>
 
 <script>
 $('.review').click(function(){
@@ -862,6 +894,8 @@ $('#hide_n').click(function(){
 })
 
 </script>
+
+
 
 
 </body>

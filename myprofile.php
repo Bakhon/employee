@@ -72,8 +72,8 @@ require_once 'function.php';
             </div>
             <div class="col text-right text-nowrap">
             <a class="" href="view.php">
-            <svg class="mr-3 mr-lg-2 i is-user-hard-hat"><use xlink:href="#s-user-hard-hat"></use></svg>
-            Профиль</a>
+            <i class="fa fa-user" aria-hidden="true">  Профиль</i>
+            </a>
             <?php  if($_SESSION) { ?>
                 <a class="btn btn-link text-body" href="exit.php">
                     <svg class="mr-2 i is-sign-in-alt"><use xlink:href="#s-sign-in-alt" /></use></svg>
@@ -589,6 +589,7 @@ require_once 'function.php';
 <script src="Theme/js/photoswipe-ui-default.min.js"></script>
 <script src="Theme/js/script.js"></script>
 
+<script src="https://use.fontawesome.com/029b8e5d68.js"></script>
 
 <script>
 
