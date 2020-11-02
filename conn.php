@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost'; // адрес сервера 
-$database = 'employee'; // имя базы данных
+$database = 'emp'; // имя базы данных
 $user = 'root'; // имя пользователя
-$password = 'root'; // пароль
+$password = ''; // пароль
 
 $link = mysqli_connect($host, $user, $password, $database) 
     or die("Ошибка " . mysqli_error($link));
