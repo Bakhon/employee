@@ -26,8 +26,6 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-
-
 <link href="Theme/css/photoswipe.css" rel="stylesheet">
 <link href="Theme/css/default-skin.css" rel="stylesheet">
 <link href="Theme/css/site.css" rel="stylesheet">
@@ -560,23 +558,43 @@
 <div class="py-5 text-center bg-ultra-light">
 <a data-toggle="modal"  data-target="#add_review" href="#" class="btn btn-lg btn-secondary review"> Оставить отзыв </a>         
 </div>
-<?php session_start();
- print_r($_SESSION); 
- echo 123;
- ?>
+
 
 <div class="modal modal-load fade show" id="add_review" tabindex="-1" data-modal-action="/profile/modal-review?user=36221" style="display: none; padding-right: 17px;" aria-modal="true" role="dialog">
     <div class="modal-dialog" role="document">
     <?php   if($_SESSION) { ?>
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Вы не можете оставить</h5>                                
+                <h5 class="modal-title">Добавьте отзыв</h5>                                
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body"><div class="mb-3"><div class="font-weight-bold">Если Вы заказчик:</div><div class="p-2">Вы можете оставить отзыв исполнителю, только если Вы ранее создали тендер на сайте, а этот исполнитель ответил на него.</div></div><div><div class="font-weight-bold">Если Вы исполнитель:</div><div class="p-2">Вы можете оставить отзыв заказчику, только если Вы ответили на тендер этого заказчика.</div></div></div>
-            <div class="modal-footer"><a class="btn btn-primary" href="/login">Войти</a><a class="btn btn-primary" href="/login">Зарегистрироваться</a></div>
+            <div class="modal-body">
+            <div class="mb-3">
+            
+            <div class="form-group">
+            <label for="exampleFormControlTextarea1">Отзыв на тендер:</label>    
+            <textarea class="form-control" name="about" id="about" rows="5"></textarea>            
+           </div>
+           
+           <div class="form-group">
+            <label for="exampleFormControlTextarea1">Что понравилось:</label>    
+            <textarea class="form-control" name="about" id="about" rows="5"></textarea>            
+           </div>
+
+           <div class="form-group">
+            <label for="exampleFormControlTextarea1">Не понравилось:</label>    
+            <textarea class="form-control" name="about" id="about" rows="5"></textarea>             
+           </div>
+
+           <div class="form-group">
+            <label for="exampleFormControlTextarea1">Общие выводы:</label>    
+            <textarea class="form-control" name="about" id="about" rows="5"></textarea>            
+           </div>
+           
+           </div></div>
+            <div class="modal-footer"><a class="btn btn-primary" href="/login">Сохранить</a></div>
         </div>
     <?php }else { ?>
         <div class="modal-content">
@@ -586,7 +604,13 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body"><div class="mb-3"><div class="font-weight-bold">Если Вы заказчик:</div><div class="p-2">Вы можете оставить отзыв исполнителю, только если Вы ранее создали тендер на сайте, а этот исполнитель ответил на него.</div></div><div><div class="font-weight-bold">Если Вы исполнитель:</div><div class="p-2">Вы можете оставить отзыв заказчику, только если Вы ответили на тендер этого заказчика.</div></div></div>
+            <div class="modal-body">
+            <div class="mb-3">
+            <div class="font-weight-bold">Если Вы заказчик:</div>
+            <div class="p-2">Вы можете оставить отзыв исполнителю, только если Вы ранее создали тендер на сайте, а этот исполнитель ответил на него.</div>
+            </div>
+            
+            <div><div class="font-weight-bold">Если Вы исполнитель:</div><div class="p-2">Вы можете оставить отзыв заказчику, только если Вы ответили на тендер этого заказчика.</div></div></div>
             <div class="modal-footer"><a class="btn btn-primary" href="/login">Войти</a><a class="btn btn-primary" href="/login">Зарегистрироваться</a></div>
         </div>
     <?php } ?>
