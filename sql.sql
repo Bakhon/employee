@@ -1,23 +1,30 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Nov 01, 2020 at 05:58 PM
--- Server version: 5.7.26
--- PHP Version: 7.3.8
+-- Хост: 127.0.0.1
+-- Время создания: Ноя 02 2020 г., 13:27
+-- Версия сервера: 10.4.14-MariaDB
+-- Версия PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `employee`
+-- База данных: `emp`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dic_country`
+-- Структура таблицы `dic_country`
 --
 
 CREATE TABLE `dic_country` (
@@ -26,7 +33,7 @@ CREATE TABLE `dic_country` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `dic_country`
+-- Дамп данных таблицы `dic_country`
 --
 
 INSERT INTO `dic_country` (`ID`, `NAME`) VALUES
@@ -36,7 +43,21 @@ INSERT INTO `dic_country` (`ID`, `NAME`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `services`
+-- Структура таблицы `review`
+--
+
+CREATE TABLE `review` (
+  `ID` int(11) NOT NULL,
+  `REV_TENDER` mediumtext NOT NULL,
+  `LIKE_REV` mediumtext NOT NULL,
+  `NOTLIKE_REV` mediumtext NOT NULL,
+  `ALL_CONCL` mediumtext NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `services`
 --
 
 CREATE TABLE `services` (
@@ -46,7 +67,7 @@ CREATE TABLE `services` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `services`
+-- Дамп данных таблицы `services`
 --
 
 INSERT INTO `services` (`ID`, `NAME_SERV`, `SPECID`) VALUES
@@ -60,7 +81,7 @@ INSERT INTO `services` (`ID`, `NAME_SERV`, `SPECID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `speciality`
+-- Структура таблицы `speciality`
 --
 
 CREATE TABLE `speciality` (
@@ -69,7 +90,7 @@ CREATE TABLE `speciality` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `speciality`
+-- Дамп данных таблицы `speciality`
 --
 
 INSERT INTO `speciality` (`ID`, `NAME_SPEC`) VALUES
@@ -79,7 +100,7 @@ INSERT INTO `speciality` (`ID`, `NAME_SPEC`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Структура таблицы `users`
 --
 
 CREATE TABLE `users` (
@@ -96,7 +117,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users`
+-- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `LOCATION`, `ABOUT`, `AVATAR`) VALUES
@@ -109,7 +130,7 @@ INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `TYPE`, `PASSWORD`, `STA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_speciality`
+-- Структура таблицы `users_speciality`
 --
 
 CREATE TABLE `users_speciality` (
@@ -119,7 +140,7 @@ CREATE TABLE `users_speciality` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users_speciality`
+-- Дамп данных таблицы `users_speciality`
 --
 
 INSERT INTO `users_speciality` (`ID`, `USER_ID`, `USER_SPECIALITY`) VALUES
@@ -133,69 +154,86 @@ INSERT INTO `users_speciality` (`ID`, `USER_ID`, `USER_SPECIALITY`) VALUES
 (25, 21, 8);
 
 --
--- Indexes for dumped tables
+-- Индексы сохранённых таблиц
 --
 
 --
--- Indexes for table `dic_country`
+-- Индексы таблицы `dic_country`
 --
 ALTER TABLE `dic_country`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `services`
+-- Индексы таблицы `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Индексы таблицы `services`
 --
 ALTER TABLE `services`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `speciality`
+-- Индексы таблицы `speciality`
 --
 ALTER TABLE `speciality`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `users`
+-- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `users_speciality`
+-- Индексы таблицы `users_speciality`
 --
 ALTER TABLE `users_speciality`
   ADD PRIMARY KEY (`ID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT for table `dic_country`
+-- AUTO_INCREMENT для таблицы `dic_country`
 --
 ALTER TABLE `dic_country`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `services`
+-- AUTO_INCREMENT для таблицы `review`
+--
+ALTER TABLE `review`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `services`
 --
 ALTER TABLE `services`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `speciality`
+-- AUTO_INCREMENT для таблицы `speciality`
 --
 ALTER TABLE `speciality`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `users_speciality`
+-- AUTO_INCREMENT для таблицы `users_speciality`
 --
 ALTER TABLE `users_speciality`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
