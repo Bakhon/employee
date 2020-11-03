@@ -1,7 +1,7 @@
 <?php 
 
 function Get_avatar($user_id){
-    require_once 'conn.php';
+    require 'conn.php';
     $query ="SELECT u.* FROM `users` u  where u.id = $user_id"; 
     $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
       $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -13,7 +13,7 @@ function Get_avatar($user_id){
 
 function Get_user_profile_data($user_id)
 {
-    require_once 'conn.php';
+    require 'conn.php';
     $query = "SELECT u.*, d.name FROM `users` u, dic_country d where u.location = d.id and u.id = $user_id";
     
     $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 

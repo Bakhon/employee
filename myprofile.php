@@ -186,7 +186,7 @@ require_once 'function.php';
                         <div class="col-auto pr-1">
                         <?php  
                         foreach($rows3 as $row3) {?>
-                             <img class="rounded-circle" src="<?php $row3['AVATAR']; ?>" width="58" height="58" alt="">  
+                             <img class="rounded-circle" src="<?php echo $row3['AVATAR']; ?>" width="58" height="58" alt="">  
                         <?php } ?>                                                  </div>
                         <div class="col position-static">
                         <?php  foreach($rows as $row) { ?>

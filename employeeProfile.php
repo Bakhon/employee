@@ -1,4 +1,6 @@
-
+<?php 
+session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -52,16 +54,23 @@
             </div>
             <div class="col-auto d-none d-md-block">
                 <div class="middle">
-                    <a class="text-body" href="first.html">SiteName.KZ</a>                    
+                    <a class="text-body" href="/">SiteName.KZ</a>                    
                     <span class="text-muted px-2">/</span>
                     <a class="text-body" href="#">Каталог мастеров и цен</a>             
                 </div>
             </div>
             <div class="col text-right text-nowrap">
-                <a class="btn btn-link text-body" href="#">
+            <?php if($_SESSION) { ?>
+                <a class="btn btn-link text-body" href="exit.php"">
+                    <svg class="mr-2 i is-sign-in-alt"><use xlink:href="#s-sign-in-alt" /></use></svg>
+                    Выйти
+                </a>  
+            <?php }else { ?>
+                  <a class="btn btn-link text-body" href="login.php"">
                     <svg class="mr-2 i is-sign-in-alt"><use xlink:href="#s-sign-in-alt" /></use></svg>
                     Войти
-                </a>                            
+                </a>    
+            <?php } ?>                       
             </div>
         </div>
     </div>
@@ -74,10 +83,22 @@
     <div>
         <div class="container py-4 py-md-5">
             <div class="row align-items-center">
+            <?php 
+               $uid = $_GET['uid'];
+               require_once 'conn.php';
+             //  $query = "SELECT u.*, d.name, sc.* FROM `users` u, dic_country d, users_speciality us, services sc, speciality s where u.location = d.id and u.id = us.USER_ID and us.USER_SPECIALITY = sc.ID and sc.SPECID = s.id and u.id = ".$_SESSION['id'];
+               $query2 ="SELECT u.*, d.name FROM `users` u, dic_country d where u.location = d.id and u.id = $uid"; 
+             //  echo $query;
+               $result2 = mysqli_query($link, $query2) or die("Ошибка " . mysqli_error($link)); 
+              // $num_rows = mysqli_num_rows($result);
+              // $row = mysqli_fetch_row($result);
+               $rows2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+               foreach($rows2 as $row) {
+            ?>
                 <div class="col-md-4 col-lg-3 text-center mb-4 mb-md-0">
-                    <img class="rounded-circle shadow" src="Theme/images/employees/143190.jpg" width="200" height="200" alt="Мастер Иван Иванов">               
+                    <img class="rounded-circle shadow" src="<?php echo $row['AVATAR']; ?>" width="200" height="200" alt="Мастер Иван Иванов">               
                 </div>
-
+               <?php } ?>
                 <div class="col-md-8 col-lg-7 col-xl-6">
                     <div class="bg-black-50 rounded-xl px-4 py-3 text-white text-center text-md-left shadow">
                         <div class="unlink" style="position: absolute; bottom: 5px; right: 20px;">   </div>
@@ -163,9 +184,11 @@
             <!-- Pic and emp info -->
             <div class="border mb-5 py-3 px-4 rounded-xl shadow-sm position-relative">
                     <div class="row">
+                    <?php  foreach($rows as $row) { ?>
                         <div class="col-auto pr-1">
-                             <img class="rounded-circle" src="Theme/images/employees/143190.jpg" width="58" height="58" alt="Мастер Иван Иванов">                                                    </div>
+                             <img class="rounded-circle" src="<?php echo $row['AVATAR']; ?>" width="58" height="58" alt="Мастер Иван Иванов">                                                    </div>
                         <div class="col position-static">
+                        <?php } ?>
                         <?php  foreach($rows as $row) { ?>
                             <div class="mb-2 mt-n1">
                                 <a class="text-success mb-2 stretched-link" href="#" data-modal="/modal/verified?user=3991">
@@ -218,7 +241,7 @@
             <div class="px-4">
                 <button type="button" class="btn btn-secondary btn-lg btn-block my-4" >                        
                     
-                    <a href="message.html" class="btn btn-secondary btn-lg btn-block my-4" >
+                    <a href="message.php?getid=<?php $get_id = $_GET['uid']; echo $get_id; ?>" class="btn btn-secondary btn-lg btn-block my-4" >
                         <svg class="mr-2 i is-envelope"><use xlink:href="#s-envelope" /></use></svg>Отправить сообщение</a>
             </div>
 
@@ -271,12 +294,43 @@
 
 
 
-
 <!-- reviews
 Отзывы о мастере -->
 <section id="reviews" class="pt-5 bg-ultra-light">
     <div class="container">
         <h2 class="mb-4 text-center h-underline h-underline-secondary">Отзывы о мастере </h2>
+
+
+<?php 
+      require_once 'conn.php';
+       $get_id = $_GET['uid'];    
+        $query_rev = "SELECT r.*, u.* FROM `review` r, `users` u where r.id_from = u.id and r.ID_TO = $get_id order by r.id DESC LIMIT 0,1 ";
+        $result_rev = mysqli_query($link, $query_rev) or die("Ошибка " . mysqli_error($link)); 
+        $num_rows = mysqli_num_rows($result_rev);
+       // echo $num_rows;
+        $rows_rev = mysqli_fetch_all($result_rev, MYSQLI_ASSOC);
+
+
+
+ 
+        
+
+if($num_rows <= 0) { ?>
+        <div class="row justify-content-center">
+    <div class="col-xl-10">
+                    <div id="w4" class="alert-info alert-i alert" role="alert">
+
+<svg class="alert-icon i id-info-circle" style="--i-primary-color: white;" ajax=""><svg class="i-color" style="--i-primary-color: white;" id="d-info-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs></defs><path fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" class="i-secondary"></path><path fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z" class="i-primary"></path></svg></svg>На данный момент отзывов пока еще нет.
+
+
+</div>            </div>
+</div>
+<?php }else { 
+    foreach($rows_rev as $row) {
+
+      
+
+    ?>
 
         <div class="row justify-content-center">
             <div class="col-xl-10">
@@ -288,13 +342,13 @@
 
                         <!-- Rate -->
                         <div class="col-sm-8 col-md-6 col-lg-4 middle mb-3 mb-lg-0">
-                            <a class="h5 text-body" href="#">Елена</a>
+                            <a class="h5 text-body" href="#"><?php echo  $row['NAME']; ?></a>
                                 <div class="text-muted mt-2"><svg class="mr-1 i ir-calendar-alt">
                                     <use xlink:href="#r-calendar-alt" /></use></svg>
-                                    03.07.2020
+                                    <?php $date = date('d.m.Y');  echo $date;?>
                                 </div>
 
-                                <div class="mt-3">
+                          <!--      <div class="mt-3">
                                     <div class="my-1">
                                             <div class="float-right text-muted">
                                                 <span>Отлично</span>
@@ -348,7 +402,7 @@
                                              </div>
                                             Соответствие цен                            
                                     </div>
-                                </div>
+                                </div> -->
                         </div>
                         <!-- Rate end-->
 
@@ -361,16 +415,14 @@
                                         <div class="font-weight-bold mb-1">Отзыв на тендер:</div>
                                     <a class="text-body" href="#">
                                         <svg class="mr-1 pr-1 i id-external-link"><use xlink:href="#d-external-link" /></use></svg>
-                                        Снять опалубку с перекрытия (Нур-Султан)</a>                    
+                                        <?php echo $row['REV_TENDER']; ?></a>                    
                             </div>
                             
                             <!--     Что понравилось -->
                             <div class="mb-4">
                                     <svg class="text-success position-absolute ml-n4 mt-1 d-none d-sm-block i is-plus-circle"><use xlink:href="#s-plus-circle" /></use></svg>                       
                                      <div class="font-weight-bold mb-1">Что понравилось:</div>
-                                    Все сделано качественно.<br />     
-                                    Претензий по работе нет вообще.<br />            
-                                    Мастер не бухает, это приятно удивило.                    
+                                     <?php echo $row['LIKE_REV']; ?>                   
                             </div>
                                                                 
                             
@@ -378,19 +430,18 @@
                             <div class="mb-4">
                                     <svg class="text-danger position-absolute ml-n4 mt-1 d-none d-sm-block i is-minus-circle"><use xlink:href="#s-minus-circle" /></use></svg>                        
                                     <div class="font-weight-bold mb-1">Не понравилось:</div>
-                                    Из за погоды сроки ремонта увеличились (плохо сохло в дождь)<br />
-                                    Понадобились доп работы по обработке стены от грибка и выравнивание стен, это увеличило стоимость.                    
+                                    <?php echo $row['NOTLIKE_REV']; ?>                    
                             </div>
 
 
                             <!-- Общие выводы -->
                             <div class="mb-4">
                                     <div class="font-weight-bold mb-1">Общие выводы:</div>
-                                    В целом, все ок                    
+                                    <?php echo $row['ALL_CONCL']; ?>                    
                             </div>
                                                                                 
                             
-                            <div class="mb-4">
+                    <!--        <div class="mb-4">
                                 <div id="reply2340" class="mb-3">
                                     <div class="mb-1 middle">                            
                                         <img class="rounded-circle mr-2" src="Theme/images/employees/143190.jpg" width="26" height="26" alt="Мастер Иван Иванов">
@@ -406,13 +457,33 @@
                                     </div>
                                 </div>
                             </div>
-
+  -->
 
                         </div>
+
                     </div>
                 </div>
             </div> 
+    <?php } ?>
 
+    <?php 
+    
+ //   SELECT  r.* FROM `review` r where r.ID_TO  = 21  and id != 21;
+    
+      require_once 'conn.php';
+      $get_id = $_GET['uid'];    
+       $query_rev = "select max(rw.id) max_id from review rw where rw.ID_TO = $get_id";
+       $result = mysqli_query($link, $query_rev) or die("Ошибка " . mysqli_error($link)); 
+       $num_rows = mysqli_num_rows($result);
+       $rows1 = mysqli_fetch_all($result, MYSQLI_ASSOC);
+       $max_id =  $rows1[0]['max_id'];
+       $query = "SELECT u.*,  r.* FROM `review` r, `users` u where r.id_from = u.id and r.ID_TO = $get_id and r.id != $max_id";
+       $result2 = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
+       $rows2 = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+      foreach($rows2 as $rowss) {
+
+
+    ?>
 
             <!-- DELETE this - hidden -->
             <div id="review9834" class="card mt-3 mb-4 shadow-sm rounded-xl hidden">
@@ -421,13 +492,13 @@
 
                         <!-- Rate -->
                         <div class="col-sm-8 col-md-6 col-lg-4 middle mb-3 mb-lg-0">
-                            <a class="h5 text-body" href="#">Светлана</a>
+                            <a class="h5 text-body" href="#"><?php echo $rowss['NAME']; ?></a>
                                 <div class="text-muted mt-2"><svg class="mr-1 i ir-calendar-alt">
                                     <use xlink:href="#r-calendar-alt" /></use></svg>
                                     01.07.2020
                                 </div>
 
-                                <div class="mt-3">
+                      <!--          <div class="mt-3">
                                     <div class="my-1">
                                             <div class="float-right text-muted">
                                                 <span>Отлично</span>
@@ -481,7 +552,7 @@
                                              </div>
                                             Соответствие цен                            
                                     </div>
-                                </div>
+                                </div>  -->
                         </div>
                         <!-- Rate end-->
 
@@ -494,14 +565,14 @@
                                         <div class="font-weight-bold mb-1">Отзыв на тендер:</div>
                                     <a class="text-body" href="#">
                                         <svg class="mr-1 pr-1 i id-external-link"><use xlink:href="#d-external-link" /></use></svg>
-                                        Внутрянка в таунхаусе 90 м.кв.  (Нур-Султан)</a>                    
+                                        <?php echo $rowss['REV_TENDER']; ?> </a>                    
                             </div>
                             
                             <!--     Что понравилось -->
                             <div class="mb-4">
                                     <svg class="text-success position-absolute ml-n4 mt-1 d-none d-sm-block i is-plus-circle"><use xlink:href="#s-plus-circle" /></use></svg>                       
                                      <div class="font-weight-bold mb-1">Что понравилось:</div>
-                                     Делали работы в таунхаусе: плитка, обои, ламинат, гипсокартон, покраска, даже мансардную лестницу поставили:)                    
+                                     <?php echo $rowss['LIKE_REV']; ?>                    
                             </div>
                                                                 
                             
@@ -509,18 +580,18 @@
                             <div class="mb-4">
                                     <svg class="text-danger position-absolute ml-n4 mt-1 d-none d-sm-block i is-minus-circle"><use xlink:href="#s-minus-circle" /></use></svg>                        
                                     <div class="font-weight-bold mb-1">Не понравилось:</div>                                    
-                                    На всех не хватает таких ребят, приходилось ждать пока освободятся:)                    
+                                    <?php echo $rowss['NOTLIKE_REV']; ?>                      
                             </div>
 
 
                             <!-- Общие выводы -->
                             <div class="mb-4">
                                     <div class="font-weight-bold mb-1">Общие выводы:</div>
-                                    Все ок                    
+                                    <?php echo $rowss['ALL_CONCL']; ?>                     
                             </div>
                                                                                 
                             
-                            <div class="mb-4">
+                  <!--          <div class="mb-4">
                                 <div id="reply2340" class="mb-3">
                                     <div class="mb-1 middle">                            
                                         <img class="rounded-circle mr-2" src="Theme/images/employees/143190.jpg" width="26" height="26" alt="Мастер Иван Иванов">
@@ -536,12 +607,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                    -->
 
                         </div>
                     </div>
                 </div>
             </div> 
+      <?php } ?>
             <!-- DELETE this - hidden end -->
 
 
@@ -550,6 +622,8 @@
             </div> 
                                                              
         </div>
+
+<?php } ?>
         </div>
     </div>
 </section>
@@ -574,27 +648,28 @@
             <div class="mb-3">
             
             <div class="form-group">
+            <input type="hidden" id="to" value="<?php echo $_GET['uid']; ?>" />
             <label for="exampleFormControlTextarea1">Отзыв на тендер:</label>    
-            <textarea class="form-control" name="about" id="about" rows="5"></textarea>            
+            <textarea class="form-control" name="review" id="review" rows="5"></textarea>            
            </div>
            
            <div class="form-group">
             <label for="exampleFormControlTextarea1">Что понравилось:</label>    
-            <textarea class="form-control" name="about" id="about" rows="5"></textarea>            
+            <textarea class="form-control" name="like" id="like" rows="5"></textarea>            
            </div>
 
            <div class="form-group">
             <label for="exampleFormControlTextarea1">Не понравилось:</label>    
-            <textarea class="form-control" name="about" id="about" rows="5"></textarea>             
+            <textarea class="form-control" name="dislike" id="dislike" rows="5"></textarea>             
            </div>
 
            <div class="form-group">
             <label for="exampleFormControlTextarea1">Общие выводы:</label>    
-            <textarea class="form-control" name="about" id="about" rows="5"></textarea>            
+            <textarea class="form-control" name="common" id="common" rows="5"></textarea>            
            </div>
            
            </div></div>
-            <div class="modal-footer"><a class="btn btn-primary" href="/login">Сохранить</a></div>
+            <div class="modal-footer"><input type="button" id="save_rev" class="btn btn-primary" value="Сохранить"/></div>
         </div>
     <?php }else { ?>
         <div class="modal-content">
@@ -611,7 +686,7 @@
             </div>
             
             <div><div class="font-weight-bold">Если Вы исполнитель:</div><div class="p-2">Вы можете оставить отзыв заказчику, только если Вы ответили на тендер этого заказчика.</div></div></div>
-            <div class="modal-footer"><a class="btn btn-primary" href="/login">Войти</a><a class="btn btn-primary" href="/login">Зарегистрироваться</a></div>
+            <div class="modal-footer"><a class="btn btn-primary" href="http://localhost/emp/employee/login.php">Войти</a><a class="btn btn-primary" href="http://localhost/emp/employee/register.php">Зарегистрироваться</a></div>
         </div>
     <?php } ?>
     </div>
@@ -687,7 +762,7 @@
 
         <div class="row mt-4 mb-3">
             <div class="col text-center">
-                <a href="message.html" class="btn btn-secondary btn-lg btn-block my-4" >
+                <a id="send_mess" data-id="<?php echo $_SESSION['id']; ?>" class="btn btn-secondary btn-lg btn-block my-4" >
                     <svg class="mr-2 i is-envelope"><use xlink:href="#s-envelope" /></use></svg>Отправить сообщение</a>           
             </div>
         </div>
@@ -744,17 +819,8 @@
 <script src="Theme/js/script.js"></script>
 
 <script src="https://use.fontawesome.com/029b8e5d68.js"></script>
+<script src="Theme/js/form_sender.js"></script>
 
-<script>
-$('.review').click(function(){
-      <?php if($_SESSION) { ?>
-         console.log('Hello world!');
-      <?php } else{ ?>
-
-      <?php } ?>
-)}
-
-</script>
 
 
 

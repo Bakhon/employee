@@ -1,6 +1,6 @@
 <?php 
 
-
+session_start();
 require_once '../conn.php';
 /*
 if(isset($_POST['city'])){
@@ -9,6 +9,33 @@ if(isset($_POST['city'])){
 }
 */
 
+if(isset($_POST['text'])){
+    $text = $_POST['text'];
+    $from_chat = $_POST['from_chat'];
+    $to_chat = $_POST['to_chat'];
+    $chat_date = $_POST['chat_date'];
+
+    $query = "INSERT INTO `chat`(`FROM_USER`, `TO_USER`, `MSG`, `POST_DATE`) VALUES('$from_chat', '$to_chat', '$text', '$chat_date')";
+    $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
+   // $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+if(isset($_POST['review'])){
+    $review = $_POST['review'];
+    $like = $_POST['like'];
+    $dislike = $_POST['dislike'];
+    $common = $_POST['common'];
+    $from = $_SESSION['id'];
+    $post_date = date('d-m-Y');
+    $to = $_POST['to'];
+
+    $query = "INSERT INTO `review`(`REV_TENDER`, `LIKE_REV`, `NOTLIKE_REV`, `ALL_CONCL`, `ID_FROM`, `ID_TO`, `DATE_COMMENT`) VALUES('$review', '$like', '$dislike', '$common', '$from', '$to', '$post_date')";
+     $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
+    // $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+     $num_rows = mysqli_num_rows($result);
+    header('location: http://localhost/emp/employee/employeeProfile.php?uid=21');
+
+}
 
 if(isset($_POST['about'])){
     $about = $_POST['about'];

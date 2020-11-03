@@ -38,11 +38,11 @@ if (isset($_POST['ok'])) {
 
     if ($oc == $code && $who == 2)
        { 
-        $query_ins = "INSERT INTO `users`(`NAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `DATE`) values('$name', '$phone', '$who', '$password', '1', '$post_date')";     
+        $query_ins = "INSERT INTO `users`(`NAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `POST_DATE`) values('$name', '$phone', '$who', '$password', '1', '$post_date')";     
         $result_ins = mysqli_query($link, $query_ins) or die("Ошибка " . mysqli_error($link));   
         echo '1';}
         elseif($oc == $code && $who == 1){
-            $query_ins = "INSERT INTO `users`(`NAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `DATE`) values('$name', '$phone', '$who', '$password', '1', '$post_date')";     
+            $query_ins = "INSERT INTO `users`(`NAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `POST_DATE`) values('$name', '$phone', '$who', '$password', '1', '$post_date')";     
             $result_ins = mysqli_query($link, $query_ins) or die("Ошибка " . mysqli_error($link));   
             echo '2';
         }

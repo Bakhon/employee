@@ -1,5 +1,6 @@
 <?php require 'Theme/blocks/header.php';
  require_once 'function.php';
+ require 'conn.php';
 
 $message = '';
 
@@ -41,32 +42,11 @@ if($_POST['edit']){
 			}
         }
         
-        $connect = new PDO("mysql:host=localhost;dbname=employee", "root", "root");
-        
-        $data = array(
-            ':user_name' =>	$_POST["user_name"],
-            ':AVATAR' => $user_avatar,
-            ':LASTNAME'	=>	$_POST["lastname"],
-            ':register_user_id'	=>	$_POST["register_user_id"]
-        );
-
-        $query = "
-        UPDATE users 
-        SET NAME = :user_name, 
-        LASTNAME = :LASTNAME, 
-        AVATAR = :AVATAR
-        WHERE register_user_id = :register_user_id
-        ";
-
-        $statement = $connect->prepare($query);
-
-        $statement->execute($data);
-
-        header("location: myprofile.php");
-       // $query = "UPDATE `users` SET `NAME` = '$user_name', `LASTNAME` = '$lastname', `AVATAR` = '$user_avatar'  WHERE ID = $user_id";
-       //  $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
-       //  mysqli_close($link);
-       //  header("location: myprofile.php");
+		$query = "UPDATE `users` SET `NAME` = '$user_name', `LASTNAME` = '$lastname', `AVATAR` = '$user_avatar'  WHERE ID = $user_id";
+		//echo $query;
+         $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
+         mysqli_close($link);
+         header("location: myprofile.php");
     
 
 }
@@ -145,7 +125,7 @@ foreach($result as $row)
 								<input type="file" name="user_avatar" />
 								<br />
 								
-								<input type="hidden" name="hidden_user_avatar" value="<?php echo $row["user_avatar"]; ?>" />
+								<input type="hidden" name="hidden_user_avatar" value="<?php echo $row["AVATAR"]; ?>" />
 								<br />
 							</div>
 						</div>
