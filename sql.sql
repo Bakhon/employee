@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 02 2020 г., 13:27
+-- Время создания: Ноя 03 2020 г., 18:18
 -- Версия сервера: 10.4.14-MariaDB
 -- Версия PHP: 7.2.33
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- База данных: `emp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `chat`
+--
+
+CREATE TABLE `chat` (
+  `ID` int(11) NOT NULL,
+  `FROM_USER` int(11) NOT NULL,
+  `TO_USER` int(11) NOT NULL,
+  `MSG` mediumtext NOT NULL,
+  `FILE` varchar(255) NOT NULL,
+  `POST_DATE` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `POST_TIME` varchar(200) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `chat`
+--
+
+INSERT INTO `chat` (`ID`, `FROM_USER`, `TO_USER`, `MSG`, `FILE`, `POST_DATE`, `POST_TIME`) VALUES
+(1, 21, 21, 'test', '', '2020-11-02 18:00:00', ''),
+(2, 21, 19, 'asd', '', '2020-11-03 06:07:47', ''),
+(3, 21, 19, 'tema', '', '2020-11-03 06:15:14', ''),
+(4, 21, 19, 'asd', '', '2020-11-03 06:16:46', ''),
+(5, 21, 19, 'theme', '', '2020-11-03 06:16:50', ''),
+(6, 21, 19, 'asd', '', '2020-11-03 06:19:59', ''),
+(7, 21, 19, 'test', '', '2020-11-03 11:22:40', ''),
+(8, 21, 19, 'привет ', '', '2020-11-03 11:23:01', '');
 
 -- --------------------------------------------------------
 
@@ -51,8 +81,23 @@ CREATE TABLE `review` (
   `REV_TENDER` mediumtext NOT NULL,
   `LIKE_REV` mediumtext NOT NULL,
   `NOTLIKE_REV` mediumtext NOT NULL,
-  `ALL_CONCL` mediumtext NOT NULL
+  `ALL_CONCL` mediumtext NOT NULL,
+  `ID_FROM` int(11) NOT NULL,
+  `ID_TO` int(11) NOT NULL,
+  `DATE_COMMENT` date NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `review`
+--
+
+INSERT INTO `review` (`ID`, `REV_TENDER`, `LIKE_REV`, `NOTLIKE_REV`, `ALL_CONCL`, `ID_FROM`, `ID_TO`, `DATE_COMMENT`) VALUES
+(8, 'Все понравилось', 'Все понравилось', 'Все понравилось', 'Все понравилось', 21, 21, '0000-00-00'),
+(7, 'tes', 'test', 'test', 'tes', 21, 21, '0000-00-00'),
+(9, 'Отзыв на тендер:', 'Что понравилось:', 'Не понравилось:', 'Общие выводы:', 21, 21, '0000-00-00'),
+(10, 'test321', 'test321', 'test321', 'test321', 21, 21, '0000-00-00'),
+(11, 'Master', 'Master', 'Master', 'Master', 21, 19, '0000-00-00'),
+(12, 'da', 'da', 'da', 'da', 21, 19, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -113,19 +158,20 @@ CREATE TABLE `users` (
   `STATUS` int(11) NOT NULL,
   `LOCATION` int(11) NOT NULL,
   `ABOUT` mediumtext NOT NULL,
-  `AVATAR` varchar(100) NOT NULL
+  `AVATAR` varchar(100) NOT NULL,
+  `POST_DATE` date DEFAULT current_timestamp()
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `LOCATION`, `ABOUT`, `AVATAR`) VALUES
-(18, 'qweqwew', '', '+7(771) 980-5314', 2, '88468caed55221baac033a615533285a', 1, 1, '', ''),
-(17, 'Bahon', '', '+7(771) 980-5314', 2, '88468caed55221baac033a615533285a', 1, 2, '', ''),
-(19, 'asd', 'ter', '+77004000556', 2, 'asd', 1, 2, '', ''),
-(20, 'test', '', 'test', 1, 'test', 2, 1, '', ''),
-(21, 'test', 'teste', '+7(700) 400-0556', 2, 'ef86656266184d77e084510113a11edf', 1, 1, 'Предлагаю качественную работу в сфере строительства.Опыт работы на рынке строительных услуг 11 лет. Составляю сметы и помогаю в закупке материала. Сотрудничаю с дизайнером. Выполняю ремонт любой сложности, работаю сам и с бригадой в зависимости от объекта. Гарантирую быструю и качественную работу, выполненную в соответствии со всеми требованиями и стандартами.Будутt вопросы задавайте всегда рад помочь советом. ', '');
+INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `TYPE`, `PASSWORD`, `STATUS`, `LOCATION`, `ABOUT`, `AVATAR`, `POST_DATE`) VALUES
+(18, 'qweqwew', '', '+7(771) 980-5314', 2, '88468caed55221baac033a615533285a', 1, 1, '', '', '2020-11-03'),
+(17, 'Bahon', '', '+7(771) 980-5314', 2, '88468caed55221baac033a615533285a', 1, 2, '', '', '2020-11-03'),
+(19, 'asd', 'ter', '+77004000556', 2, 'asd', 1, 2, '', '', '2020-11-03'),
+(20, 'test', '', 'test', 1, 'test', 2, 1, '', '', '2020-11-03'),
+(21, 'Test', 'Test', '+7(700) 400-0556', 2, 'ef86656266184d77e084510113a11edf', 1, 1, 'Предлагаю качественную работу в сфере строительства.Опыт работы на рынке строительных услуг 11 лет. Составляю сметы и помогаю в закупке материала. Сотрудничаю с дизайнером. Выполняю ремонт любой сложности, работаю сам и с бригадой в зависимости от объекта. Гарантирую быструю и качественную работу, выполненную в соответствии со всеми требованиями и стандартами.Будутt вопросы задавайте всегда рад помочь советом.  test', 'avatar/1604378343.jpg', '2020-11-03');
 
 -- --------------------------------------------------------
 
@@ -156,6 +202,12 @@ INSERT INTO `users_speciality` (`ID`, `USER_ID`, `USER_SPECIALITY`) VALUES
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `chat`
+--
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Индексы таблицы `dic_country`
@@ -198,6 +250,12 @@ ALTER TABLE `users_speciality`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT для таблицы `dic_country`
 --
 ALTER TABLE `dic_country`
@@ -207,7 +265,7 @@ ALTER TABLE `dic_country`
 -- AUTO_INCREMENT для таблицы `review`
 --
 ALTER TABLE `review`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `services`
